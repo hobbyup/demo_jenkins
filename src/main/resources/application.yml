@@ -1,0 +1,98 @@
+server:
+  #端口号
+  port: 8080
+  #访问项目名
+  servlet:
+    context-path:
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  #项目名称
+  application:
+    name: hello
+
+  #数据源
+  datasource:
+    #数据源基本配置
+    username: root
+    password: root
+    #mysql server 6及以上版本
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springboot?useUnicode=true&autoReconnect=true&allowMultiQueries=true&serverTimezone=UTC&useSSL=false
+    type: com.alibaba.druid.pool.DruidDataSource
+    #数据源其他配置
+    druid:
+      initial-size: 5  # 初始化大小
+      min-idle: 5  # 最小
+      max-active: 100  # 最大
+      max-wait: 60000  # 连接超时时间
+      time-between-eviction-runs-millis: 60000  # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      min-evictable-idle-time-millis: 300000  # 指定一个空闲连接最少空闲多久后可被清除，单位是毫秒
+      validation-query: SELECT 1 FROM DUAL
+
+  #静态页面
+  resources:
+    static-locations: classpath:/static/
+
+  #网页logo小图标
+  mvc:
+    favicon:
+      enabled: false
+    #表示所有的访问都经过静态资源路径；
+    static-path-pattern: /**
+    #时间格式化（Date类型）
+    date-format: yyyy-MM-dd HH:mm:ss
+
+  #thymeleaf模板引擎，类似jsp
+  thymeleaf:
+    #动态页面访问路径(根目录)
+    prefix: classpath:/templates/
+    suffix: .html
+    # 开发时关闭缓存,不然没法看到实时页面
+    cache: false
+    encoding: UTF-8
+
+  #缓存指明类型
+  cache:
+    type: redis
+    redis:
+      time-to-live: 10 #毫秒
+
+  #redis配置
+  redis:
+    host: localhost
+    database: 1
+    timeout: 10000 #连接超时时间 （默认1天）
+    password:
+    port: 6379
+    lettuce:
+      pool: # lettuce 连接池
+        max-active: 8 # 连接池最大连接数 默认 8（-1 ：表示没有限制）
+        max-wait: 60000ms # 连接池最大阻塞等待时间 默认-1ms （-1 :表示没有限制） 这里设置1分钟
+        max-idle: 8 # 最大空闲连接  默认 8
+        min-idle: 0 # 最小空闲连接  默认 0
+
+  #有的时候json数据在浏览器页面输出的时候，可能是乱码，解决方法
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+#mybatis配置
+mybatis:
+  configuration:
+    #开启驼峰命名匹配规则
+    map-underscore-to-camel-case: true
+
+#日志配置
+logging:
+  level:
+    com:
+      example:
+        demo:
+          dao: debug
+
+swagger:
+  enabled: true
